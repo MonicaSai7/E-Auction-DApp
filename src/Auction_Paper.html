@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    	<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    	<title>Document</title>
+
+	<link rel="stylesheet" type="text/css" href="index.css">
+
+	<script src=node_modules/web3/dist/web3.min.js></script>
+</head>
+
+<body>
+    <div class="container">
+	<h1>Auction</h1>
+	<h2>Maximum Registrations:4</h2>
+	
+	<h3>First Time To Bid?</h3>
+	<button id="button1">Register</button>
+
+	<h3>Give your bid!</h3>
+	<label for="count" class="col-lg-2 control-label">Tokens</label>
+        	<input id="count" type="text">
+	<button id="button2">Bid</button>
+
+	<h3>Auction Close</h3>
+	<button id="button3">Auction Close</button>
+
+	<h3>Change Account</h3>
+	<label for="ac_index" class="col-lg-2 control-label">Account Index</label>
+    		<input id="index" type="text">
+	<button id="button4">Change Account</button>
+	
+	<h3>Withdraw Bid</h3>
+	<button id="button5">Withdraw</button>
+    </div>
+
+<script src=https://code.jquery.com/jquery-3.2.1.slim.min.js></script>
+
+<script>
+ if (typeof web3 !== "undefined") 
+	{
+ 	  web3 = new Web3(web3.currentProvider);
+ 	} 
+ else 
+	{
+ 	  // set the provider you want from Web3.providers
+	  web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
+ 	}
+ web3.eth.defaultAccount = web3.eth.accounts[0];
+ var AuctionContract = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "auctionClose",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_count",
+				"type": "uint256"
+			}
+		],
+		"name": "bid",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "register",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "withdraw",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"name": "_biddingTime",
+				"type": "uint256"
+			}
+		],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "constructor"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "beneficiary",
+		"outputs": [
+			{
+				"name": "remainingTokens",
+				"type": "uint256"
+			},
+			{
+				"name": "personId",
+				"type": "uint256"
+			},
+			{
+				"name": "addr",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "getPersonDetails",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "winners",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+
+ var Auction = AuctionContract.at('0x0ff1368a93fc250d7777db7079a4fe3afb997a46');
+ console.log(Auction);
+   
+    $("#button1").click(function() {
+           Auction.register.sendTransaction({from:web3.eth.defaultAccount, gas:5000000});
+	   console.log("Registered!");
+        });
+    $("#button2").click(function() {
+	   Auction.bid.sendTransaction($("#count").val(),{from:web3.eth.defaultAccount, gas:5000000});
+	   console.log("Bid Done!");
+	});
+    $("#button3").click(function() {
+	   Auction.auctionClose.sendTransaction({from:web3.eth.defaultAccount, gas:5000000});
+	   console.log("Winner:"+Auction.winners.call());
+	});
+    $("#button4").click(function(result) {
+     	   web3.eth.defaultAccount = web3.eth.accounts[$("#index").val()];
+     	   console.log(web3.eth.defaultAccount);
+ 	});
+    $("#button5").click(function() {
+	   Auction.withdraw();
+	   console.log("Bid Withdrawn!");
+	}); 
+
+    </script>
+</body>
+</html>
