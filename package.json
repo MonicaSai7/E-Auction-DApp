@@ -1,0 +1,26 @@
+{
+  "name": "auction",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "dev": "node --version",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MonicaSai7/E-Auction-DApp.git"
+  },
+  "author": "Monica Sai Kambala",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MonicaSai7/E-Auction-DApp/issues"
+  },
+  "homepage": "https://github.com/MonicaSai7/E-Auction-DApp#readme",
+  "dependencies": {
+    "web3": "^1.2.6"
+  }
+}
