@@ -1,26 +1,21 @@
 {
-  "name": "auction",
+  "name": "Ballot",
   "version": "1.0.0",
   "description": "",
-  "main": "truffle-config.js",
+  "main": "truffle.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "dev": "node --version",
+    "dev": "lite-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MonicaSai7/E-Auction-DApp.git"
-  },
-  "author": "Monica Sai Kambala",
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/MonicaSai7/E-Auction-DApp/issues"
+  "devDependencies": {
+    "lite-server": "^2.3.0"
   },
-  "homepage": "https://github.com/MonicaSai7/E-Auction-DApp#readme",
   "dependencies": {
-    "web3": "^1.2.6"
+    "nodemailer": "^4.4.0"
   }
 }
